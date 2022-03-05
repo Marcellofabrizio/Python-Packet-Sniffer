@@ -1,12 +1,10 @@
 import socket
-from general import *
-from networking.ethernet import Ethernet
-from networking.ipv4 import IPv4
-from networking.icmp import ICMP
-from networking.tcp import TCP
-from networking.udp import UDP
-from networking.pcap import Pcap
-from networking.http import HTTP
+from utils import *
+from protocols import *
+from pcap import Pcap
+
+IPV4_TYPE = 8
+IPV6_TYPE = int("0xDD86", 16)
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
@@ -24,15 +22,20 @@ def main():
     conn = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
 
     while True:
-        raw_data, addr = conn.recvfrom(65535)
+        raw_data = conn.recvfrom(65535)[0]
         pcap.write(raw_data)
         eth = Ethernet(raw_data)
 
         print('\nEthernet Frame:')
         print(TAB_1 + 'Destination: {}, Source: {}, Protocol: {}'.format(eth.dest_mac, eth.src_mac, eth.proto))
 
+        if eth.proto == IPV6_TYPE:
+            ipv6 = IPv6(raw_data)
+        
+        continue
+        
         # IPv4
-        if eth.proto == 8:
+        if eth.proto == IPV4_TYPE:
             ipv4 = IPv4(eth.data)
             print(TAB_1 + 'IPv4 Packet:')
             print(TAB_2 + 'Version: {}, Header Length: {}, TTL: {},'.format(ipv4.version, ipv4.header_length, ipv4.ttl))

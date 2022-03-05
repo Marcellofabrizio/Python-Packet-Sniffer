@@ -1,6 +1,5 @@
 import struct
 
-
 class IPv4:
 
     def __init__(self, raw_data):
@@ -8,10 +7,12 @@ class IPv4:
         self.version = version_header_length >> 4
         self.header_length = (version_header_length & 15) * 4
         self.ttl, self.proto, src, target = struct.unpack('! 8x B B 2x 4s 4s', raw_data[:20])
-        self.src = self.ipv4(src)
-        self.target = self.ipv4(target)
+        self.src = self.build_ipv4_addr(src)
+        self.target = self.build_ipv4_addr(target)
         self.data = raw_data[self.header_length:]
 
-    # Returns properly formatted IPv4 address
-    def ipv4(self, addr):
+    def build_ipv4_addr(self, addr):
+        '''
+        Returns properly formatted IPv4 address
+        '''
         return '.'.join(map(str, addr))

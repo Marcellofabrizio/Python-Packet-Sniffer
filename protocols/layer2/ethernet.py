@@ -1,6 +1,6 @@
 import socket
 import struct
-from general import *
+from utils import *
 
 
 class Ethernet:
