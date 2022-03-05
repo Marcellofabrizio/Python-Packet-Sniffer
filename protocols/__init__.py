@@ -1,4 +1,5 @@
 from protocols.layer2.ethernet import Ethernet
+from protocols.layer2.arp import ARP
 from protocols.layer3.icmp import ICMP
 from protocols.layer3.ipv4 import IPv4
 from protocols.layer3.ipv6 import IPv6

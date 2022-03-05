@@ -1,8 +1,11 @@
 import socket
+
 from utils import *
 from protocols import *
 from pcap import Pcap
+from socket import socket, AF_PACKET, SOCK_RAW, ntohs
 
+ARP_TYPE = int("0x0608", 16)
 IPV4_TYPE = 8
 IPV6_TYPE = int("0xDD86", 16)
 
@@ -19,7 +22,7 @@ DATA_TAB_4 = '\t\t\t\t   '
 
 def main():
     pcap = Pcap('capture.pcap')
-    conn = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+    conn = socket(AF_PACKET, SOCK_RAW, ntohs(3))
 
     while True:
         raw_data = conn.recvfrom(65535)[0]
@@ -28,6 +31,11 @@ def main():
 
         print('\nEthernet Frame:')
         print(TAB_1 + 'Destination: {}, Source: {}, Protocol: {}'.format(eth.dest_mac, eth.src_mac, eth.proto))
+
+        if eth.proto == ARP_TYPE:
+            arp = ARP(raw_data)
+
+        continue
 
         if eth.proto == IPV6_TYPE:
             ipv6 = IPv6(raw_data)
