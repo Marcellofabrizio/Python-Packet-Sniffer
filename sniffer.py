@@ -31,8 +31,7 @@ def main():
 
         if eth.proto == IPV6_TYPE:
             ipv6 = IPv6(raw_data)
-        
-        continue
+            ipv6.print_ipv6_data()
         
         # IPv4
         if eth.proto == IPV4_TYPE:

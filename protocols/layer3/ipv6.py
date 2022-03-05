@@ -1,5 +1,9 @@
 import struct
 
+TAB_1 = '\t - '
+TAB_2 = '\t\t - '
+TAB_3 = '\t\t\t - '
+TAB_4 = '\t\t\t\t - '
 
 '''
 
@@ -51,3 +55,20 @@ class IPv6:
         Returns properly formatted IPv6 address
         '''
         return ':'.join(map('{:04x}'.format, addr_data))
+
+    def print_ipv6_data(self):
+        print(TAB_1 + 'IPv6 Packet:')
+
+        print(TAB_2 + 'Version: {}, Trafic Class: {}, Flow Label: {}'.format(
+            self.version,
+            self.traffic_class,
+            self.flow_class))
+
+        print(TAB_2 + 'Payload Size: {}, Next Header: {}, Hop Limit: {}'.format(
+            self.payload_len,
+            self.next_header,
+            self.hop_limit))
+
+        print(TAB_2 + 'Source: {}, Target: {}'.format(
+              self.src_addr, 
+              self.dest_addr))
