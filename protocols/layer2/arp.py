@@ -13,9 +13,6 @@ class ARP:
     def __init__(self, raw_data):
         header = raw_data[14:42]
 
-        # ARP header is bit 14 to 42 on the Ethernet header
-        unpacked_arp = struct.unpack("2s2s1s1s2s6s4s6s4s", header)
-
         self.hrdwr_type = struct.unpack("! H", header[0:2])[0]
         self.proto_type = struct.unpack("! H", header[2:4])[0]
         self.hrdwr_addr_len = struct.unpack("! B", header[4:5])[0]
