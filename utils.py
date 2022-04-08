@@ -16,3 +16,16 @@ def format_multi_line(prefix, string, size=80):
         if size % 2:
             size -= 1
     return '\n'.join([prefix + line for line in textwrap.wrap(string, size)])
+
+def build_ipv4_addr(addr):
+    '''
+    Returns properly formatted IPv4 address
+    '''
+    return '.'.join(map(str, addr))
+
+
+def build_ipv6_addr(addr):
+    '''
+    Returns properly formatted IPv6 address
+    '''
+    return ':'.join(map('{:04x}'.format, addr))

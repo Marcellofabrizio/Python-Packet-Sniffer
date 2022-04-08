@@ -32,13 +32,7 @@ class ARP:
                                                                                         self.opcode))
 
         print(TAB_2 + "Sender MAC Address: {}, Sender IP Address: {}".format(get_mac_addr(self.sender_mac_addr),
-                                                                             self.build_ipv4_addr(self.sender_ip_addr)))
+                                                                             build_ipv4_addr(self.sender_ip_addr)))
 
-        print(TAB_2 + "Destiny MAC Address: {}, Destiny IP Address: {}".format(get_mac_addr(self.dest_mac_addr),
-                                                                               self.build_ipv4_addr(self.dest_ip_addr)))
-
-    def build_ipv4_addr(self, addr):
-        '''
-        Returns properly formatted IPv4 address
-        '''
-        return '.'.join(map(str, addr))
+        print(TAB_2 + "Destination MAC Address: {}, Destination IP Address: {}".format(get_mac_addr(self.dest_mac_addr),
+                                                                               build_ipv4_addr(self.dest_ip_addr)))
