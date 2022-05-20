@@ -34,11 +34,11 @@ def main():
 
         if eth.proto == ARP_TYPE:
             arp = ARP(raw_data)
-            arp.print_data()
+            print(arp)
 
         if eth.proto == IPV6_TYPE:
             ipv6 = IPv6(raw_data)
-            ipv6.print_ipv6_data()
+            print(ipv6)
         
         continue
 

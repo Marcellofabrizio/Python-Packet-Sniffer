@@ -5,6 +5,9 @@ from ..package.protocol import Protocol
 class ICMPV6(Protocol):
 
     def __init__(self, raw_data):
+        self.build_package(raw_data)
+
+    def build_package(self, raw_data):
         header = raw_data
         self.icmpv6_data = header[:8]
         self.type = header[0]

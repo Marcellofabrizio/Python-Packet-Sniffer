@@ -17,6 +17,6 @@ class Ethernet(Protocol):
         self.proto = socket.htons(prototype)
         self.data = raw_data[14:]
     
-    def print_data(self):        
+    __str__(self):        
         print('\nEthernet Frame:')
         print('\t - Destination: {}, Source: {}, Protocol: {}'.format(self.dest_mac, self.src_mac, self.proto))

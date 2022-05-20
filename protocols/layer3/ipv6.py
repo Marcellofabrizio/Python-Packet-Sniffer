@@ -1,4 +1,6 @@
 import struct
+from utils import *
+from ..package.protocol import Protocol
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
@@ -29,9 +31,12 @@ TAB_4 = '\t\t\t\t - '
 '''
 
 
-class IPv6:
+class IPv6(Protocol):
 
     def __init__(self, raw_data):
+        self.build_package(raw_data)
+
+    def build_package(self, raw_data):
         header = raw_data
         self.version = header[0] >> 4
         self.traffic_class = ((header[0] & 15) << 4) + (header[1] >> 4)
@@ -41,22 +46,16 @@ class IPv6:
         self.next_header = struct.unpack('! B', header[6:7])
         self.hop_limit = struct.unpack('! B', header[7:8])
         self.data = header[40:]
-        
-        self.src_addr = self.build_ipv6_addr(
+
+        self.src_addr = build_ipv6_addr(
             struct.unpack('! 8H', header[8:24])
         )
 
-        self.dest_addr = self.build_ipv6_addr(
+        self.dest_addr = build_ipv6_addr(
             struct.unpack('! 8H', header[24:40])
         )
 
-    def build_ipv6_addr(self, addr_data):
-        '''
-        Returns properly formatted IPv6 address
-        '''
-        return ':'.join(map('{:04x}'.format, addr_data))
-
-    def print_ipv6_data(self):
+    __str__(self):
         print(TAB_1 + 'IPv6 Packet:')
 
         print(TAB_2 + 'Version: {}, Trafic Class: {}, Flow Label: {}'.format(
@@ -70,5 +69,5 @@ class IPv6:
             self.hop_limit))
 
         print(TAB_2 + 'Source: {}, Target: {}'.format(
-              self.src_addr, 
+              self.src_addr,
               self.dest_addr))

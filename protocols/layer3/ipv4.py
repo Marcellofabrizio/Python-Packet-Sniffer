@@ -1,14 +1,19 @@
 import struct
 from utils import *
+from ..package.protocol import Protocol
+
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
 TAB_3 = '\t\t\t - '
 TAB_4 = '\t\t\t\t - '
 
-class IPv4:
+class IPv4(Protocol):
 
     def __init__(self, raw_data):
+        self.build_package(raw_data)
+        
+    def build_package(self, raw_data):
         version_header_length = raw_data[0]
         self.version = version_header_length >> 4
         self.header_length = (version_header_length & 15) * 4
@@ -17,6 +22,7 @@ class IPv4:
         self.src = build_ipv4_addr(src)
         self.target = build_ipv4_addr(target)
         self.data = raw_data[self.header_length:]
+
 
     def __str__(self):
         print(TAB_1 + 'IPv4 Packet:')
