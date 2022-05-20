@@ -40,6 +40,8 @@ def main():
             ipv6 = IPv6(raw_data)
             ipv6.print_ipv6_data()
         
+        continue
+
         # IPv4
         if eth.proto == IPV4_TYPE:
             ipv4 = IPv4(eth.data)

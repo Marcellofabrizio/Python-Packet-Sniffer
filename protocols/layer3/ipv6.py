@@ -40,7 +40,8 @@ class IPv6:
         self.payload_len = struct.unpack('! H', header[4:6])
         self.next_header = struct.unpack('! B', header[6:7])
         self.hop_limit = struct.unpack('! B', header[7:8])
-
+        self.data = header[40:]
+        
         self.src_addr = self.build_ipv6_addr(
             struct.unpack('! 8H', header[8:24])
         )
