@@ -27,7 +27,7 @@ class ARP(Protocol):
         self.dest_mac_addr = struct.unpack("! 6s", header[18:24])[0]
         self.dest_ip_addr = struct.unpack("! 4s", header[24:28])[0]
 
-    __str__(self):
+    def __str__(self):
 
         print(TAB_1 + "ARP Packet:")
 

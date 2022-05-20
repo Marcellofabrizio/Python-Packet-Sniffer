@@ -55,7 +55,7 @@ class IPv6(Protocol):
             struct.unpack('! 8H', header[24:40])
         )
 
-    __str__(self):
+    def __str__(self):
         print(TAB_1 + 'IPv6 Packet:')
 
         print(TAB_2 + 'Version: {}, Trafic Class: {}, Flow Label: {}'.format(
