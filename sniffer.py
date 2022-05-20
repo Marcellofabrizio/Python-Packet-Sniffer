@@ -35,12 +35,11 @@ def main():
         if eth.proto == ARP_TYPE:
             arp = ARP(raw_data)
             print(arp)
+            break
 
         if eth.proto == IPV6_TYPE:
-            ipv6 = IPv6(raw_data)
-            print(ipv6)
+            ipv6 = IPv6(eth.data)
         
-        continue
 
         # IPv4
         if eth.proto == IPV4_TYPE:
@@ -52,10 +51,7 @@ def main():
             # ICMP
             if ipv4.proto == 1:
                 icmp = ICMP(ipv4.data)
-                print(TAB_1 + 'ICMP Packet:')
-                print(TAB_2 + 'Type: {}, Code: {}, Checksum: {},'.format(icmp.type, icmp.code, icmp.checksum))
-                print(TAB_2 + 'ICMP Data:')
-                print(format_multi_line(DATA_TAB_3, icmp.data))
+                icmp.print_data()
 
             # TCP
             elif ipv4.proto == 6:

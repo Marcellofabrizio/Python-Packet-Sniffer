@@ -1,4 +1,6 @@
 import struct
+from protocols.layer3.icmp import ICMP
+from protocols.layer3.icmpv6 import ICMPV6
 from utils import *
 from ..package.protocol import Protocol
 
@@ -55,7 +57,17 @@ class IPv6(Protocol):
             struct.unpack('! 8H', header[24:40])
         )
 
-    def __str__(self):
+        self.build_package_data()
+
+    def build_package_data(self):
+
+        if self.next_header == 58:
+            self.next_protocol = ICMPV6(self.data)
+            return
+
+        self.next_protocol = None
+
+    def print_data(self):
         print(TAB_1 + 'IPv6 Packet:')
 
         print(TAB_2 + 'Version: {}, Trafic Class: {}, Flow Label: {}'.format(
@@ -71,3 +83,6 @@ class IPv6(Protocol):
         print(TAB_2 + 'Source: {}, Target: {}'.format(
               self.src_addr,
               self.dest_addr))
+
+        if self.next_protocol:
+            self.next_protocol.print_data()

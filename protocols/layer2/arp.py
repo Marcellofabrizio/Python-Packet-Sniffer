@@ -29,14 +29,16 @@ class ARP(Protocol):
 
     def __str__(self):
 
-        print(TAB_1 + "ARP Packet:")
+        result = TAB_1 + "ARP Packet:\n"
 
-        print(TAB_2 + "Hardware Type: {}, Protocol Type: {}, Operation Code: {}".format(self.hrdwr_type,
+        result += TAB_2 + "Hardware Type: {}, Protocol Type: {}, Operation Code: {}\n".format(self.hrdwr_type,
                                                                                         self.proto_type,
-                                                                                        self.opcode))
+                                                                                        self.opcode)
 
-        print(TAB_2 + "Sender MAC Address: {}, Sender IP Address: {}".format(get_mac_addr(self.sender_mac_addr),
-                                                                             build_ipv4_addr(self.sender_ip_addr)))
+        result += TAB_2 + "Sender MAC Address: {}, Sender IP Address: {}\n".format(get_mac_addr(self.sender_mac_addr),
+                                                                             build_ipv4_addr(self.sender_ip_addr))
 
-        print(TAB_2 + "Destination MAC Address: {}, Destination IP Address: {}".format(get_mac_addr(self.dest_mac_addr),
-                                                                               build_ipv4_addr(self.dest_ip_addr)))
+        result += TAB_2 + "Destination MAC Address: {}, Destination IP Address: {}\n".format(get_mac_addr(self.dest_mac_addr),
+                                                                                    build_ipv4_addr(self.dest_ip_addr))
+
+        return result
