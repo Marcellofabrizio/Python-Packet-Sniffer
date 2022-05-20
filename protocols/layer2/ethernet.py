@@ -38,7 +38,7 @@ class Ethernet(Protocol):
             return
         
         elif self.proto == IPV6_TYPE:
-            self.next_protocol = IPv6(self)
+            self.next_protocol = IPv6(self.data)
             return
 
         self.next_protocol = None
