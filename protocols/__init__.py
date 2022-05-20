@@ -6,3 +6,5 @@ from protocols.layer3.ipv6 import IPv6
 from protocols.layer4.tcp import TCP
 from protocols.layer4.udp import UDP
 from protocols.layer5.http import HTTP
+
+from .package.protocol import Protocol

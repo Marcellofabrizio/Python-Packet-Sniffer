@@ -1,6 +1,7 @@
 import socket
 import struct
 from utils import *
+from ..package.protocol import Protocol
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
@@ -8,9 +9,12 @@ TAB_3 = '\t\t\t - '
 TAB_4 = '\t\t\t\t - '
 
 
-class ARP:
+class ARP(Protocol):
 
     def __init__(self, raw_data):
+        self.build_package(raw_data)
+
+    def build_package(self, raw_data):
         header = raw_data[14:42]
 
         self.hrdwr_type = struct.unpack("! H", header[0:2])[0]
@@ -23,7 +27,7 @@ class ARP:
         self.dest_mac_addr = struct.unpack("! 6s", header[18:24])[0]
         self.dest_ip_addr = struct.unpack("! 4s", header[24:28])[0]
 
-    def print_arp_data(self):
+    def print_data(self):
 
         print(TAB_1 + "ARP Packet:")
 

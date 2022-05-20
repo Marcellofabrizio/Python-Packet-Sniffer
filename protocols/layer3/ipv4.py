@@ -1,4 +1,5 @@
 import struct
+from utils import *
 
 TAB_1 = '\t - '
 TAB_2 = '\t\t - '
@@ -13,15 +14,9 @@ class IPv4:
         self.header_length = (version_header_length & 15) * 4
         self.ttl, self.proto, src, target = struct.unpack(
             '! 8x B B 2x 4s 4s', raw_data[:20])
-        self.src = self.build_ipv4_addr(src)
-        self.target = self.build_ipv4_addr(target)
+        self.src = build_ipv4_addr(src)
+        self.target = build_ipv4_addr(target)
         self.data = raw_data[self.header_length:]
-
-    def build_ipv4_addr(self, addr):
-        '''
-        Returns properly formatted IPv4 address
-        '''
-        return '.'.join(map(str, addr))
 
     def __str__(self):
         print(TAB_1 + 'IPv4 Packet:')
