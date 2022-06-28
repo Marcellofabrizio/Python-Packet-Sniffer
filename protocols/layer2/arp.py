@@ -27,18 +27,16 @@ class ARP(Protocol):
         self.dest_mac_addr = struct.unpack("! 6s", header[18:24])[0]
         self.dest_ip_addr = struct.unpack("! 4s", header[24:28])[0]
 
-    def __str__(self):
+    def print_data(self):
 
-        result = TAB_1 + "ARP Packet:\n"
+        print(TAB_1 + "ARP Packet:\n")
 
-        result += TAB_2 + "Hardware Type: {}, Protocol Type: {}, Operation Code: {}\n".format(self.hrdwr_type,
+        print(TAB_2 + "Hardware Type: {}, Protocol Type: {}, Operation Code: {}\n".format(self.hrdwr_type,
                                                                                         self.proto_type,
-                                                                                        self.opcode)
+                                                                                        self.opcode))
 
-        result += TAB_2 + "Sender MAC Address: {}, Sender IP Address: {}\n".format(get_mac_addr(self.sender_mac_addr),
-                                                                             build_ipv4_addr(self.sender_ip_addr))
+        print(TAB_2 + "Sender MAC Address: {}, Sender IP Address: {}\n".format(get_mac_addr(self.sender_mac_addr),
+                                                                             build_ipv4_addr(self.sender_ip_addr)))
 
-        result += TAB_2 + "Destination MAC Address: {}, Destination IP Address: {}\n".format(get_mac_addr(self.dest_mac_addr),
-                                                                                    build_ipv4_addr(self.dest_ip_addr))
-
-        return result
+        print(TAB_2 + "Destination MAC Address: {}, Destination IP Address: {}\n".format(get_mac_addr(self.dest_mac_addr),
+                                                                                    build_ipv4_addr(self.dest_ip_addr)))

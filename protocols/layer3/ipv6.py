@@ -1,6 +1,8 @@
 import struct
-from protocols.layer3.icmp import ICMP
 from protocols.layer3.icmpv6 import ICMPV6
+from protocols.layer4.tcp import TCP
+from protocols.layer4.udp import UDP
+
 from utils import *
 from ..package.protocol import Protocol
 
@@ -65,6 +67,14 @@ class IPv6(Protocol):
             self.next_protocol = ICMPV6(self.data)
             return
 
+        if self.next_header == 6:
+            self.next_protocol = TCP(self.data)
+            return
+        
+        if self.next_header == 17:
+            self.next_protocol = UDP(self.data)
+            return
+
         self.next_protocol = None
 
     def print_data(self):
@@ -86,3 +96,6 @@ class IPv6(Protocol):
 
         if self.next_protocol:
             self.next_protocol.print_data()
+
+        else:
+            print(self.data)

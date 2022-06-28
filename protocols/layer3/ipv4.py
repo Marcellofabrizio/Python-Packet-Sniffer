@@ -1,4 +1,8 @@
 import struct
+from protocols.layer3.icmp import ICMP
+from protocols.layer4.tcp import TCP
+from protocols.layer4.udp import UDP
+
 from utils import *
 from ..package.protocol import Protocol
 
@@ -8,11 +12,12 @@ TAB_2 = '\t\t - '
 TAB_3 = '\t\t\t - '
 TAB_4 = '\t\t\t\t - '
 
+
 class IPv4(Protocol):
 
     def __init__(self, raw_data):
         self.build_package(raw_data)
-        
+
     def build_package(self, raw_data):
         version_header_length = raw_data[0]
         self.version = version_header_length >> 4
@@ -23,8 +28,32 @@ class IPv4(Protocol):
         self.target = build_ipv4_addr(target)
         self.data = raw_data[self.header_length:]
 
+        self.next_protocol = self.build_package_data()
 
-    def __str__(self):
+    def build_package_data(self):
+
+        if self.proto == 1:
+            self.next_protocol = ICMP(self.data)
+            return
+
+        if self.proto == 6:
+            self.next_protocol = TCP(self.data)
+            return
+
+        if self.proto == 17:
+            self.next_protocol = UDP(self.data)
+            return
+
+    def print_data(self):
         print(TAB_1 + 'IPv4 Packet:')
-        print(TAB_2 + 'Version: {}, Header Length: {}, TTL: {},'.format(self.version, self.header_length, self.ttl))
-        print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(self.proto, self.src, self.target))
+        print(TAB_2 + 'Version: {}, Header Length: {}, TTL: {},'.format(self.version,
+              self.header_length, self.ttl))
+        print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(self.proto,
+              self.src, self.target))
+
+        if self.next_protocol:
+            self.next_protocol.print_data()
+
+        else:
+            print(self.data)
+        
