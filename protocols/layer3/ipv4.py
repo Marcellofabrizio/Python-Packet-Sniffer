@@ -32,17 +32,18 @@ class IPv4(Protocol):
 
     def build_package_data(self):
 
+        self.next_protocol = None
+
         if self.proto == 1:
-            self.next_protocol = ICMP(self.data)
-            return
+            return ICMP(self.data)
 
         if self.proto == 6:
-            self.next_protocol = TCP(self.data)
-            return
+            return TCP(self.data)
 
         if self.proto == 17:
-            self.next_protocol = UDP(self.data)
-            return
+            return UDP(self.data)
+
+        return None
 
     def print_data(self):
         print(TAB_1 + 'IPv4 Packet:')
@@ -51,9 +52,11 @@ class IPv4(Protocol):
         print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(self.proto,
               self.src, self.target))
 
-        if self.next_protocol:
+        print(self.next_protocol)
+        if self.next_protocol is not None:
             self.next_protocol.print_data()
 
         else:
-            print(self.data)
+            print(TAB_1 + 'Other IPv4 Data Protocol :')
+            print(format_multi_line('TAB_2',self.data))
         

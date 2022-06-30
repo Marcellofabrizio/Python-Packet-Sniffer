@@ -59,23 +59,20 @@ class IPv6(Protocol):
             struct.unpack('! 8H', header[24:40])
         )
 
-        self.build_package_data()
+        self.next_protocol = self.build_package_data()
 
     def build_package_data(self):
 
         if self.next_header == 58:
-            self.next_protocol = ICMPV6(self.data)
-            return
+            return ICMPV6(self.data)
 
         if self.next_header == 6:
-            self.next_protocol = TCP(self.data)
-            return
+            return TCP(self.data)
         
         if self.next_header == 17:
-            self.next_protocol = UDP(self.data)
-            return
+            return UDP(self.data)
 
-        self.next_protocol = None
+        return None
 
     def print_data(self):
         print(TAB_1 + 'IPv6 Packet:')

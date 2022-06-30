@@ -30,16 +30,16 @@ class TCP(Protocol):
         self.flag_fin = offset_reserved_flags & 1
         self.data = raw_data[offset:]
 
-        self.build_package_data()
+        self.next_protocol = self.build_package_data()
 
     def build_package_data(self):
         if len(self.data) > 0:
                 # HTTP
+                print(self.src_port, self.dest_port)
                 if self.src_port == 80 or self.dest_port == 80:
-                    self.next_protocol = HTTP(self.data)
-                    return
+                    return HTTP(self.data)
         
-        self.next_protocol = None
+        return None
 
 
     def print_data(self):

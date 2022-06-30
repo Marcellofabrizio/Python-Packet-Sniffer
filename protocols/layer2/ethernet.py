@@ -11,6 +11,8 @@ ARP_TYPE = int("0x0608", 16)
 IPV4_TYPE = 8
 IPV6_TYPE = int("0xDD86", 16)
 
+DATA_TAB_1 = '\t   '
+
 class Ethernet(Protocol):
 
     def __init__(self, raw_data):
@@ -25,23 +27,20 @@ class Ethernet(Protocol):
         self.proto = socket.htons(prototype)
         self.data = raw_data[14:]
     
-        self.build_package_data(raw_data)
+        self.next_protocol = self.build_package_data(raw_data)
 
     def build_package_data(self, raw_data):
 
         if self.proto == ARP_TYPE:
-            self.next_protocol = ARP(raw_data)
-            return
-
+            return ARP(raw_data)
+            
         elif self.proto == IPV4_TYPE:
-            self.next_protocol = IPv4(self.data)
-            return
+            return IPv4(self.data)
         
         elif self.proto == IPV6_TYPE:
-            self.next_protocol = IPv6(self.data)
-            return
+            return IPv6(self.data)
 
-        self.next_protocol = None
+        return None
 
     def print_data(self):        
         print('\nEthernet Frame:')
@@ -49,3 +48,7 @@ class Ethernet(Protocol):
 
         if self.next_protocol:
             self.next_protocol.print_data()
+
+        else: 
+            print('Ethernet Data:')
+            print(format_multi_line(DATA_TAB_1, self.data))
