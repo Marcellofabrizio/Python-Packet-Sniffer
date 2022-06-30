@@ -1,7 +1,6 @@
 import socket
 
-from utils import *
-from protocols import *
+from protocols import Ethernet
 from pcap import Pcap
 from socket import socket, AF_PACKET, SOCK_RAW, ntohs
 
