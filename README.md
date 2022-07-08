@@ -73,7 +73,7 @@ Os protocolos a seguir são os que já haviam sido implementados no projeto orig
 
 #### Camada 3
 
-- IPv6: Devido a falta de atualização do projeto original, a última versão do programa foi publicada quando ainda haviam endereços IPv4 disponíveis na Internet. Hoje, essa não é mais a realidade. Surgiu assim, a o IPv6 para substituir a versão anterior. Este protocolo foi a principal adição que o grupo fez ao projeto.
+- IPv6: Devido a falta de atualização do projeto original, a última versão do programa foi publicada quando ainda haviam endereços IPv4 disponíveis na Internet. Hoje, essa não é mais a realidade. Surgiu então o protcolo IPv6 para substituir a versão anterior. Este protocolo foi a principal adição que o grupo fez ao projeto, já que o tráfego na rede utilizando IPv6 se torna cada vez mais comum.
     **Cabeçalhos**
     - Version
     - Trafic Class
