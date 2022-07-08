@@ -27,7 +27,6 @@ class ICMPV6(Protocol):
         except:
             print('\n')
         print('\t\t - Checksum: {self.checksum}\n')
-        print('\t\t - ICMPv6 Data: {self.data}\n')
 
 class ICMPV6Messages():
 

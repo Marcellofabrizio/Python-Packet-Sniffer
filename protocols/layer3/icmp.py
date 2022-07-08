@@ -20,5 +20,3 @@ class ICMP(Protocol):
     def print_data(self):
         print(TAB_1 + 'ICMP Packet:')
         print(TAB_2 + 'Type: {}, Code: {}, Checksum: {},'.format(self.type, self.code, self.checksum))
-        print(TAB_2 + 'ICMP Data:')
-        print(format_multi_line('\t\t\t   ', self.data))

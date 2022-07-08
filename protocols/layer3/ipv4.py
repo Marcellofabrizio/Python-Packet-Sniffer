@@ -52,11 +52,6 @@ class IPv4(Protocol):
         print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(self.proto,
               self.src, self.target))
 
-        print(self.next_protocol)
         if self.next_protocol is not None:
             self.next_protocol.print_data()
-
-        else:
-            print(TAB_1 + 'Other IPv4 Data Protocol :')
-            print(format_multi_line('TAB_2',self.data))
         

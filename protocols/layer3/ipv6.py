@@ -93,6 +93,3 @@ class IPv6(Protocol):
 
         if self.next_protocol:
             self.next_protocol.print_data()
-
-        else:
-            print(self.data)
